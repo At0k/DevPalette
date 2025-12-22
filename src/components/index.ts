@@ -6,6 +6,7 @@ import { primaryButton } from './buttons/primary-button';
 import { secondaryButton } from './buttons/secondary-button';
 import { redButton } from './buttons/red-button';
 import { slideUpRevealButton } from './buttons/slide-up-reveal-button';
+import { iconButtonGroup } from './buttons/icon-button-group';
 
 // Cards
 import { basicCard } from './cards/basic-card';
@@ -23,6 +24,7 @@ import { spinner } from './loaders/spinner';
 import { skeletonLoader } from './loaders/skeleton-loader';
 import { dotsLoader } from './loaders/dots-loader';
 import { fullscreenLoading } from './loaders/fullscreen-loading';
+import { pacmanGhostLoader } from './loaders/pacman-ghost-loader';
 
 // Compass
 import { interactiveCompass } from './compass/interactive-compass';
@@ -44,6 +46,7 @@ export const components = [
   secondaryButton,
   redButton,
   slideUpRevealButton,
+  iconButtonGroup,
   basicCard,
   dropdownMenu,
   bottomMenu,
@@ -53,6 +56,7 @@ export const components = [
   skeletonLoader,
   dotsLoader,
   fullscreenLoading,
+  pacmanGhostLoader,
   interactiveCompass,
   horizontalScroller,
   conditionalButtons,

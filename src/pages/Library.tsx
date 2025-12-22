@@ -16,6 +16,17 @@ interface ResourceSection {
 
 const sections: ResourceSection[] = [
   {
+    title: 'AI Design Tools',
+    subtitle: 'AI-powered tools for generating graphics, illustrations, and design assets.',
+    resources: [
+      {
+        name: 'Recraft.ai',
+        description: 'AI-powered design tool for creating illustrations, icons, and graphics. Generate professional designs with AI assistance.',
+        url: 'https://www.recraft.ai/',
+      },
+    ],
+  },
+  {
     title: 'Icon Libraries (Modern Alternatives)',
     subtitle: 'Lucide is my favorite for its clean strokes, but these alternatives are excellent for specific needs.',
     resources: [
@@ -51,9 +62,19 @@ const sections: ResourceSection[] = [
         url: 'https://gsap.com/',
       },
       {
+        name: 'Anime.js',
+        description: 'Lightweight JavaScript animation library with powerful SVG support. Perfect for motion paths, morphing, and complex timeline animations.',
+        url: 'https://animejs.com/',
+      },
+      {
         name: 'Lottie React',
         description: 'Plays Adobe After Effects animations as lightweight SVG. Perfect for complex, custom animated icons.',
         url: 'https://lottiefiles.com/web-player',
+      },
+      {
+        name: 'Jitter',
+        description: 'Motion design tool for creating animations. Export to 4K, GIF, Lottie, or import from Figma. Great alternative to After Effects for web animations.',
+        url: 'https://jitter.video/',
       },
     ],
   },
@@ -79,17 +100,28 @@ const sections: ResourceSection[] = [
     ],
   },
   {
+    title: 'UI Component Libraries',
+    subtitle: 'Curated collections of ready-to-use UI components with copy-paste code for React, Vue, and HTML/CSS.',
+    resources: [
+      {
+        name: 'Uiverse.io',
+        description: 'Open-source UI elements made with CSS or Tailwind. Browse thousands of components with live previews and copy-ready code.',
+        url: 'https://uiverse.io/',
+      },
+    ],
+  },
+  {
     title: 'Best for "Big Picture" Inspiration',
     subtitle: 'See how top-tier teams use motion for storytelling, navigation, and page transitions.',
     resources: [
       {
         name: 'Awwwards – Animation Collection',
-        description: 'Industry-standard gallery. Check “Site of the Day”, “Transitions”, and “Micro-interactions” collections.',
+        description: 'Industry-standard gallery. Check "Site of the Day", "Transitions", and "Micro-interactions" collections.',
         url: 'https://www.awwwards.com/websites/animation/',
       },
       {
         name: 'Godly.website',
-        description: 'Highly curated “god-tier” web experiences with modern, smooth, React/Next/GSAP-heavy interactions.',
+        description: 'Highly curated "god-tier" web experiences with modern, smooth, React/Next/GSAP-heavy interactions.',
         url: 'https://godly.website/',
       },
       {
@@ -157,6 +189,11 @@ const sections: ResourceSection[] = [
         url: 'https://spline.design/',
       },
       {
+        name: 'Tripo3D',
+        description: 'AI-powered 3D model generator. Create 3D models from images or text, with features like AI texturing, smart retopology, and universal rigging. Exports GLB, OBJ, FBX, STL formats.',
+        url: 'https://studio.tripo3d.ai/',
+      },
+      {
         name: 'Blockbench',
         description: 'Low-poly and retro style modeling. Extremely light, free, and standard for GLTF exports.',
         url: 'https://www.blockbench.net/',
@@ -186,6 +223,11 @@ const sections: ResourceSection[] = [
         name: 'Poly Pizza',
         description: 'A hidden gem for Low Poly assets. Tiny file sizes, perfect for web performance.',
         url: 'https://poly.pizza/',
+      },
+      {
+        name: 'TopoExport',
+        description: '3D topology and retopology tool for optimizing and exporting 3D models. Great for preparing models for web use.',
+        url: 'https://app.topoexport.com/',
       },
       {
         name: 'Kenney Assets',
