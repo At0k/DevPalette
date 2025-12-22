@@ -1,4 +1,6 @@
 import { ExternalLink } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { useMemo } from 'react';
 
 interface ResourceLink {
   name: string;
@@ -242,6 +244,27 @@ const sections: ResourceSection[] = [
 ];
 
 export default function Library() {
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
+
+  // Filter sections and resources based on search query
+  const filteredSections = useMemo(() => {
+    if (!searchQuery) return sections;
+
+    return sections.map(section => {
+      const filteredResources = section.resources.filter(resource => 
+        resource.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        section.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+
+      return {
+        ...section,
+        resources: filteredResources
+      };
+    }).filter(section => section.resources.length > 0);
+  }, [searchQuery]);
+
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -251,10 +274,16 @@ export default function Library() {
             A curated collection of libraries, tools, and inspiration to help you build high-end 
             digital experiences—from icons and animations to 3D and full-stack architecture.
           </p>
+          {searchQuery && (
+            <p className="text-blue-400 mt-3">
+              Showing results for "{searchQuery}" ({filteredSections.reduce((acc, s) => acc + s.resources.length, 0)} results)
+            </p>
+          )}
         </header>
 
-        <div className="space-y-8">
-          {sections.map((section) => (
+        {filteredSections.length > 0 ? (
+          <div className="space-y-8">
+            {filteredSections.map((section) => (
             <section
               key={section.title}
               className="bg-dark-surface border border-dark-border rounded-xl p-6 md:p-7"
@@ -291,10 +320,16 @@ export default function Library() {
                 ))}
               </div>
             </section>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">No resources found matching "{searchQuery}".</p>
+          </div>
+        )}
 
-        <section className="mt-10 bg-dark-surface border border-dark-border rounded-xl p-6 md:p-7">
+        {!searchQuery && (
+          <section className="mt-10 bg-dark-surface border border-dark-border rounded-xl p-6 md:p-7">
           <h2 className="text-2xl font-semibold mb-3">Quick Recommendations for Your Stack</h2>
           <ul className="text-gray-300 space-y-3 text-sm md:text-base">
             <li>
@@ -316,7 +351,8 @@ export default function Library() {
               <span className="font-semibold text-white">3D Assets:</span> Check <span className="text-blue-400">Poly Pizza</span> for simple props (chairs, trees) to keep performance high.
             </li>
           </ul>
-        </section>
+          </section>
+        )}
       </div>
     </div>
   );

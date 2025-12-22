@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { BookOpen, Camera, FolderTree, Code, Palette, Monitor, X, ZoomIn, ZoomOut, Maximize2, ChevronDown } from 'lucide-react';
 
 interface DocItem {
@@ -67,11 +68,23 @@ interface ParsedContent {
 }
 
 export default function UnrealEngine() {
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
   const [selectedDoc, setSelectedDoc] = useState<DocItem | null>(null);
   const [loading, setLoading] = useState(false);
   const [parsedContent, setParsedContent] = useState<ParsedContent>({ textContent: [], codeBlocks: [], sections: [] });
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const sectionRefs = useRef<{ [key: string]: HTMLHeadingElement | null }>({});
+  
+  // Filter docs based on search query
+  const filteredDocs = useMemo(() => {
+    if (!searchQuery) return docs;
+    
+    return docs.filter(doc => 
+      doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      doc.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [searchQuery]);
   
   // Image modal state
   const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
@@ -349,6 +362,11 @@ export default function UnrealEngine() {
           <p className="text-gray-400 text-sm sm:text-base md:text-lg">
             Start with Project Organization, then follow the guides in order
           </p>
+          {searchQuery && (
+            <p className="text-blue-400 mt-2 text-sm sm:text-base">
+              Showing results for "{searchQuery}" ({filteredDocs.length} {filteredDocs.length === 1 ? 'guide' : 'guides'} found)
+            </p>
+          )}
         </div>
 
         {/* Resizable 3-Column Layout */}
@@ -360,8 +378,9 @@ export default function UnrealEngine() {
           >
             <div className="bg-dark-surface border border-dark-border rounded-lg p-5 lg:p-6 sticky top-20 h-fit">
               <h2 className="text-lg lg:text-xl font-semibold mb-3 lg:mb-4">Getting Started</h2>
-              <div className="space-y-2 unreal-sidebar-scroll max-h-[calc(100vh-200px)] overflow-y-auto pr-1">
-                {docs.map((doc, index) => {
+              {filteredDocs.length > 0 ? (
+                <div className="space-y-2 unreal-sidebar-scroll max-h-[calc(100vh-200px)] overflow-y-auto pr-1">
+                  {filteredDocs.map((doc, index) => {
                   const isSelected = selectedDoc?.id === doc.id;
                   const isDropdownOpen = openDropdown === doc.id;
                   const sections = isSelected ? parsedContent.sections : [];
@@ -419,8 +438,13 @@ export default function UnrealEngine() {
                       )}
                     </div>
                   );
-                })}
-              </div>
+                  })}
+                </div>
+              ) : (
+                <div className="text-center text-gray-400 py-8">
+                  <p className="text-sm">No guides found matching "{searchQuery}".</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -524,8 +548,9 @@ export default function UnrealEngine() {
           {/* Navigation Sidebar */}
           <div className="bg-dark-surface border border-dark-border rounded-lg p-5">
             <h2 className="text-lg font-semibold mb-3">Getting Started</h2>
-            <div className="space-y-2">
-              {docs.map((doc, index) => (
+            {filteredDocs.length > 0 ? (
+              <div className="space-y-2">
+                {filteredDocs.map((doc, index) => (
                   <button
                     key={doc.id}
                     onClick={() => loadDocument(doc)}
@@ -545,8 +570,13 @@ export default function UnrealEngine() {
                       </div>
                     </div>
                   </button>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center text-gray-400 py-8">
+                  <p className="text-sm">No guides found matching "{searchQuery}".</p>
+                </div>
+              )}
             </div>
 
           {/* Content */}

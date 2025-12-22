@@ -81,6 +81,9 @@ export default function Navbar() {
     setSearchQuery(e.target.value);
   };
 
+  // Determine if search should be shown based on current route
+  const isSearchEnabled = ['/', '/library', '/unreal-engine'].includes(location.pathname);
+
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // If we're already on the home page, prevent navigation and just scroll to top
     if (location.pathname === '/') {
@@ -171,7 +174,7 @@ export default function Navbar() {
             {navLinks}
 
             {/* Search Toggle (desktop) */}
-            {!isSearchOpen ? (
+            {isSearchEnabled && !isSearchOpen ? (
               <button 
                 onClick={handleSearchToggle}
                 className="text-gray-400 hover:text-white transition-colors"
@@ -179,7 +182,7 @@ export default function Navbar() {
               >
                 <Search size={20} />
               </button>
-            ) : (
+            ) : isSearchEnabled ? (
               <div className="flex items-center gap-2">
                 <div className="relative">
                   <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -212,18 +215,20 @@ export default function Navbar() {
                   <X size={20} />
                 </button>
               </div>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile actions */}
           <div className="flex items-center gap-3 md:hidden">
-            <button
+            {isSearchEnabled && (
+              <button
               onClick={handleSearchToggle}
               className="text-gray-400 hover:text-white transition-colors"
               aria-label="Toggle search"
             >
               {isSearchOpen ? <X size={20} /> : <Search size={20} />}
             </button>
+            )}
             <button
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               className="text-gray-400 hover:text-white transition-colors"
@@ -235,7 +240,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile search bar */}
-        {isSearchOpen && (
+        {isSearchEnabled && isSearchOpen && (
           <div className="md:hidden mt-2 pb-2">
             <div className="relative">
               <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
