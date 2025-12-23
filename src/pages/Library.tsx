@@ -108,6 +108,11 @@ const sections: ResourceSection[] = [
         description: 'Open-source UI elements made with CSS or Tailwind. Browse thousands of components with live previews and copy-ready code.',
         url: 'https://uiverse.io/',
       },
+      {
+        name: '21st.dev Components',
+        description: 'Community-driven gallery of production-ready React UI components and sections, including heroes, features, AI chats, buttons, and more.',
+        url: 'https://21st.dev/community/components/s/image',
+      },
     ],
   },
   {
